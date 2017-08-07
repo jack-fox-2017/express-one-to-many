@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Contact</title>
+  </head>
+  <body>
+    <a href="/">Home</a>
+    <a href="/contacts">Contacts</a>
+    <a href="/addresses">Addresses</a>
+    <br><br>
+  
+    <%ctc.forEach(c=> { %>
+    <form action="/contacts/edit/<%=c.id%>" method="post">
+      <fieldset>
+        <legend>Edit Personal Information</legend>
+        <input type="text" name="name" value="<%= c.name %>"><br>
+        <input type="text" name="company" value="<%= c.company %>"><br>
+        <input type="text" name="telp_number" value="<%= c.telp_number %>"><br>
+        <input type="text" name="email" value="<%= c.email %>"><br>
+        <input type="submit" value="Update">
+      </fieldset>
+    </form>
+    <% }) %>
+  </body>
+</html>

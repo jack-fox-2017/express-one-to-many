@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Address</title>
+  </head>
+  <body>
+    <a href="/">Home</a>
+    <a href="/contacts">Contacts</a>
+    <a href="/addresses">Addresses</a>
+    <br><br>
+
+
+    <form action="/addresses/edit/<%=adr.id%>" method="post">
+      <fieldset>
+        <legend>Edit Address</legend>
+        <input type="text" name="street" value="<%= adr.street %>"><br>
+        <input type="text" name="city" value="<%= adr.city %>"><br>
+        <input type="text" name="zip" value="<%= adr.zip %>"><br>
+        <select name= "contact_id">
+        <% for(var i=0; i<ctc.length; i++) {%>
+          <% if(adr.contact_id == ctc[i].id) {%>
+            <option value="<%= ctc[i].id %>" selected><%= ctc[i].id %>.  <%= ctc[i].name %></option>
+          <%} else {%>
+            <option value="<%= ctc[i].id %>"><%= ctc[i].id %>. <%= ctc[i].name %></option>
+        <%}}%>
+        </select><br><br>
+        <input type="submit" value="Update">
+      </fieldset>
+    </form>
+    <br><br>
+
+  </body>
+</html>

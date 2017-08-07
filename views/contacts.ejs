@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contact List Page</title>
+  </head>
+  <body>
+    <a href="/">Home</a>
+    <a href="/contacts">Contacts</a>
+    <a href="/addresses">Addresses</a>
+    <br><br>
+    <h1>Contact List</h1>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Company</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%ctc.forEach(c=> { %>
+          <tr>
+            <td><%= c.id %></td>
+            <td><%= c.name %></td>
+            <td><%= c.company %></td>
+            <td><%= c.telp_number %></td>
+            <td><%= c.email %></td>
+            <td><a href="/contacts/edit/<%=c.id%>">Edit</a>
+              <a href="/contacts/delete/<%=c.id%>">Delete</a></td>
+          </tr>
+        <% })%>
+      </tbody>
+    </table>
+    <br><br>
+    <form action="/contacts" method="post">
+      <fieldset>
+        <legend>Add Personal Information</legend>
+        <div class="input-field"><input id="name" type="text" name="name"><label for="name">Name</label></div>
+        <div class="input-field"><input id="company" type="text" name="company"><label for="company">Company</label></div>
+        <div class="input-field"><input id="telp_number" type="text" name="telp_number"><label for="telp_number">Telp Number</label></div>
+        <div class="input-field"><input id="email" type="text" name="email"><label for="email">Email</label></div>
+        <input type="submit" value="Add" class="btn green">
+      </fieldset>
+    </form>
+    <br><br>
+
+  </body>
+</html>
