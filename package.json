@@ -2,7 +2,7 @@
   "name": "express-sqlite3-crud",
   "version": "1.0.0",
   "description": "/** /** EXPRESS CONTACTS-GROUPS --------------------------- Buatlah sebuah aplikasi sederhana menggunakan Express JS dan SQLITE3 untuk menampilkan list Contact&Group, menambah data Contact&Group, melakukan edit data dan delete data berdasarkan data yang dipilih",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,7 +20,6 @@
     "body-parser": "^1.17.2",
     "ejs": "^2.5.7",
     "express": "^4.15.3",
-    "nodemon": "^1.11.0",
-    "sqlite3": "^3.1.9"
+    "sqlite3": "^3.1.8"
   }
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+  <body>
+    <marquee direction="right">
+      <h1><a href="/">Addresses</a></h1>
+    </marquee>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Id</th>
+          <th>Street</th>
+          <th>City</th>
+          <th>Province</th>
+          <th>Zip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(item => { %>
+          <tr>
+            <td><%= item.contact_name %></td>
+            <td><%= item.id %></td>
+            <td><%= item.street %></td>
+            <td><%= item.city %></td>
+            <td><%= item.province %></td>
+            <td><%= item.zip %></td>
+            <td><a href="/addresses/edit/<%= item.id %>">Edit</a></td>
+            <td><a href="/addresses/delete/<%= item.id %>">Delete</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <form action="/addresses" method="post">
+      <input type="text" name="street" placeholder="Street">
+      <input type="text" name="city" placeholder="City">
+      <input type="text" name="province" placeholder="Province">
+      <input type="text" name="zip" placeholder="Zip">
+
+      <select name="contact_id">
+        <option value="" selected>Contact Name</option>
+        <% contacts.forEach(item2 => { %>
+          <option value=<%= item2.id %>><%= item2.name %></option>
+        <% }) %>
+      </select>
+
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

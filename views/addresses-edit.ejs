@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Address</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+  <body>
+    <% let item = data[0] %>
+    <marquee direction="right">
+      <h1><a href="/">Edit Address: <%= item.street %></a></h1>
+    </marquee>
+
+    <form action="/addresses/edit/<%= item.id %>" method="post">
+      <input type="text" name="street" placeholder="Street" value="<%= item.street %>">
+      <input type="text" name="city" placeholder="City" value="<%= item.city %>">
+      <input type="text" name="province" placeholder="Province" value="<%= item.province %>">
+      <input type="text" name="zip" placeholder="ZIP" value="<%= item.zip %>">
+      <select name="contact_id">
+        <option value="">Contact Name</option>
+        <% contacts.forEach(item2 => { %>
+          <option value=<%= item2.id %> <%= item.contact_id == item2.id ? 'selected' : ''%> ><%= item2.name %></option>
+        <% }) %>
+      </select>
+
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
