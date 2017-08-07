@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FORM ISI DATA ADRESSES</title>
+  </head>
+  <body>
+
+    <center>
+      <h1>FORM ISI DATA ADRESSES</h1>
+    <form action="/home/adresses/add" method = "POST">
+      <br><br>
+      Jalan:<br>
+      <input type="text" name="jalan" value="" required>
+      <br><br>
+      Kota:<br>
+      <input type="text" name="kota" value="" required>
+      <br><br>
+      Provinsi:<br>
+      <input type="text" name="provinsi" value="" required>
+      <br><br>
+      <select name = "contact_id">
+       <%data_contacts.forEach(dataCon => {%>
+       <option value="<%=dataCon.id%>"><%=dataCon.name%></option>
+       <%})%>
+     </select>
+      <input type="submit" value="Submit">
+    </form>
+  </center>
+  </body>
+</html>

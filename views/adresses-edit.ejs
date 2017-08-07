@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Form</title>
+  </head>
+  <body>
+    <center>
+    <h1>EDIT FORM</h1>
+    <form action="/home/adresses/edit/<%=data_adresses.id%>" method = "POST">
+      <br>
+      Jalan :<br>
+      <input type="text" name="jalan" value= "<%=data_adresses.jalan%>" >
+      <br>
+      Kota :<br>
+      <input type="text" name="kota" value= "<%=data_adresses.kota%>" >
+      <br>
+      Provinsi :<br>
+      <input type="text" name="provinsi" value= "<%=data_adresses.provinsi%>" >
+      <br><br>
+      <select name = "contact_id">
+      <%for(var i = 0; i < data_contacts.length; i++){%>
+        <%if(data_contacts[i].id == data_adresses.contact_id ){%>
+        <option value="<%=data_contacts[i].id%>" selected><%=data_contacts[i].name%></option>
+        <%}else{%>
+        <option value="<%=data_contacts[i].id%>"><%=data_contacts[i].name%></option>
+        <%}%>
+      <%}%>
+
+     </select>
+      <input type="submit" value="Submit">
+    </form>
+  </center>
+
+  </body>
+</html>

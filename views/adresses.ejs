@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DATA ADRESSES</title>
+  </head>
+  <body>
+    <center>
+      <br>
+      <h1>DATA ADRESSES</h1>
+    <a href = "/home/adresses/add"> <button type="button" name="buttons">Tambah Address</button></a><br><br>
+    <table border = "1">
+      <tr>
+        <th>ID</th>
+        <th>Jalan</th>
+        <th>Kota</th>
+        <th>Provinsi</th>
+        <th>Contact ID</th>
+        <th>name</th>
+        <th>Edit</th>
+        <th>Hapus</th>
+      </tr>
+      <%data_adresses.forEach(dataAdrs => {%>
+      <tr>
+        <td><%=dataAdrs.id%></td>
+        <td><%=dataAdrs.jalan%></td>
+        <td><%=dataAdrs.kota%></td>
+        <td><%=dataAdrs.provinsi%></td>
+        <td><%=dataAdrs.contact_id%></td>
+        <td><%=dataAdrs.name%></td>
+        <td><a href="/home/adresses/edit/<%=dataAdrs.id%>"> <button type="button" name="buttons">Ganti</button></a></td>
+        <td><a href="/home/adresses/delete/<%=dataAdrs.id%>"> <button type="button" name="buttons">Hapus</button></a></td>
+      </tr>
+      <%})%>
+    </table>
+  </center>
+  </body>
+</html>

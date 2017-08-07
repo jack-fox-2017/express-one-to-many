@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>INFO KONTAK</title>
+  </head>
+  <body>
+    <center>
+    <h1>INFO KONTAK</h1>
+    <a href = "/home/contacts/add"> <button type="button" name="buttons">Tambah Kontak</button></a><br><br>
+    <table border = "1">
+    <tr>
+      <th>ID</th>
+      <th>Nama</th>
+      <th>Company</th>
+      <th>Telepon</th>
+      <th>Email</th>
+      <th>Edit</th>
+      <th>Hapus</th>
+    </tr>
+    <%data.forEach(dataShow => {%>
+      <tr>
+        <td><%=dataShow.id%></td>
+        <td><%=dataShow.name%></td>
+        <td><%=dataShow.company%></td>
+        <td><%=dataShow.telp_number%></td>
+        <td><%=dataShow.email%></td>
+        <td><a href="/home/contacts/edit/<%=dataShow.id%>"> <button type="button" name="buttons">Ganti</button></a></td>
+        <td><a href="/home/contacts/delete/<%=dataShow.id%>"> <button type="button" name="buttons">Hapus</button></a></td>
+      </tr>
+    <%})%>
+  </table>
+</center>
+  </body>
+</html>
