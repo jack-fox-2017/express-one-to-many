@@ -1,47 +1,84 @@
 <!DOCTYPE html>
 <html>
   <head>
+      <style>
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #333;
+        }
+
+        li {
+          float: left;
+        }
+
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+
+        li a:hover {
+          background-color: #111;
+        }
+    </style>
     <meta charset="utf-8">
-    <title></title>
-    <%- include part/css %>
+    <title>Contacts</title>
   </head>
   <body>
-    <%- include part/menu %>
+    <ul>
+      <li><a class="active" href="/">Home</a></li>
+      <li><a href="contacts">Contact</a></li>
+      <li><a href="groups">Group</a></li>
+      <li><a href="addresses">Address</a></li>
+      <li><a href="profiles">Profile</a></li>
+    </ul>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Telp Number</th>
+        <th>E-mail</th>
+        <th>Groups</th>
+        <th>Action</th>
+      </td>
+      <% for(var i = 0; i < data.length; i++) { %>
+      <tr>
+        <td><%= data[i].contact_id %></td>
+        <td><%= data[i].contact_name %></td>
+        <td><%= data[i].company%></td>
+        <td><%= data[i].telp_number%></td>
+        <td><%= data[i].email%></td>
+        <td><%= data[i].group_names%></td>
+        <td><a class = 'button_2' href='contacts/group/<%= data[i].contact_id %>'>Assign Groups </a>||
+            <a class = 'button_2' href='contacts/edit/<%= data[i].contact_id %>'>Edit </a>||
+            <a class = 'button_2' href='contacts/delete/<%= data[i].contact_id %>'>Delete </a>||
+            <a class = 'button_2' href='contacts/address/<%= data[i].contact_id %>'>Address </a>
+        </td>
+      </tr>
+      <%  }  %>
 
-    <div class="col-md-8 col-md-offset-2">
-      <form class="form-inline" action="/contacts" method="post">
-        <input type="text" name="name" placeholder="ex: Achim Baggins" class="form-control">
-        <input type="text" name="company" placeholder="ex: Achim Corp" class="form-control">
-        <input type="text" name="phone" placeholder="ex: 0818" class="form-control">
-        <input type="text" name="email" placeholder="ex: me@achim.my.id" class="form-control">
-        <button type="submit" name="button" class="btn btn-info"><span class="glyphicon glyphicon-send"></span> &nbsp; Add Contact</button>
-      </form>
-      <br>
-      <table class="table table-hover">
-        <tr class="info">
-          <td class="text-center">No</td>
-          <td class="text-center">Contact ID</td>
-          <td>Name </td>
-          <td>Company</td>
-          <td>Phone</td>
-          <td>Email</td>
-          <td class="text-center">Action</td>
-        </tr>
-        <% let i = 1; contactData.forEach(kontak => { %>
-          <tr>
-            <td class="text-center"><%= i++ %></td>
-            <td class="text-center"><%= kontak.id %></td>
-            <td><%= kontak.name %></td>
-            <td><%= kontak.company %></td>
-            <td><%= kontak.phone %></td>
-            <td><%= kontak.email %></td>
-            <td class="text-center">
-              <a href="/contacts/<%= kontak.id %>/edit"><button type="button" name="button" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Edit</button></a>
-              <a href="/contacts/<%= kontak.id %>/delete"><button type="button" name="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button></a>
-            </td>
-          </tr>
-        <% }) %>
-      </table>
-    </div>
+    </table>
+
+    <!-- Contacts: id type integer, name type string, company type string, telp_number type string, email type string -->
+
+    <form action="/contacts" method="post">
+      <input type="text" name='name' placeholder="name">
+      <input type="text" name='company' placeholder="company">
+      <input type="text" name='telp_number' placeholder="telp_number">
+      <input type="text" name='email' placeholder="email">
+      <select name="groups_id">
+      <% data_group.forEach( cont => {%>
+        <option value="<%= cont.id%>"><%= cont.name_of_group%></option>
+      <%})%>
+      </select>
+      <button class = 'button_3' type="submit">Submit</button>
+    </form>
+
   </body>
 </html>

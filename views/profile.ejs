@@ -1,60 +1,77 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <style>
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      background-color: #111;
+    }
+</style>
     <meta charset="utf-8">
-    <title></title>
-    <%- include part/css %>
+    <title>Profiles</title>
   </head>
   <body>
-    <%- include part/menu %>
+    <ul>
+      <li><a class="active" href="/">Home</a></li>
+      <li><a href="contacts">Contact</a></li>
+      <li><a href="groups">Group</a></li>
+      <li><a href="addresses">Address</a></li>
+      <li><a href="profiles">Profile</a></li>
+    </ul>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Contacts</th>
+      </td>
+      <% for(var i = 0; i < data.length; i++) { %>
+      <tr>
+        <td><%= data[i].id %></td>
+        <td><%= data[i].username %></td>
+        <td><%= data[i].password %></td>
+        <td><%= data[i].name %></td>
+        <td><a class = 'button_2' href='profiles/edit/<%= data[i].id %>'>Edit </a>||
+            <a class = 'button_2' href='profiles/delete/<%= data[i].id %>'>Delete </a>||
+        </td>
+      </tr>
+      <%  }  %>
 
-    <div class="col-md-8 col-md-offset-2">
-      <% if(pesan){ %>
-        <p style="color:red" class="text-center"><b><%= pesan %></b></p>
-      <% } %>
-      <form class="form-inline" action="/profiles" method="post">
-        <label>New Profile Register Form</label><br>
-        <input type="text" name="username" placeholder="ex: achim2017" class="form-control">
-        <input type="password" name="password" placeholder="Your Password" class="form-control">
-        <input type="text" name="firstname" placeholder="Achim" class="form-control">
-        <input type="text" name="lastname" placeholder="ex: Baggins" class="form-control">
-        <select  name="ContactId" class="form-control">
-          <option value="" disabled selected>select a Contact</option>
+    </table>
 
-          <% kontak.forEach(getData => { %>
-            <option value="<%= getData.id %>"><%= getData.name %></option>
-          <% }) %>
-        </select>
-        <button type="submit" name="button" class="btn btn-info"><span class="glyphicon glyphicon-send"></span> &nbsp; Add New Profile</button>
-      </form>
+    <form action="/profiles" method="post">
+      <input type="text" name='username' placeholder="username">
+      <input type="text" name='password' placeholder="password">
+      <select name="contacts_id">
+      <% data_contact.forEach( cont => {%>
+        <option value="<%= cont.id%>"><%= cont.name%></option>
+      <%})%>
+      </select>
+      <button class = 'button_3' type="submit">Submit</button>
       <br>
-      <table class="table table-hover">
-        <tr class="info">
-          <td class="text-center">No</td>
-          <td class="text-center">Contact ID</td>
-          <td>Username </td>
-          <td>Password</td>
-          <td>Firstname</td>
-          <td>Lastname</td>
-          <td>Contact Id</td>
-          <td class="text-center">Action</td>
-        </tr>
-        <% let i = 1; profileData.forEach(profile => { %>
-          <tr>
-            <td class="text-center"><%= i++ %></td>
-            <td class="text-center"><%= profile.id %></td>
-            <td><%= profile.username %></td>
-            <td><%= profile.password %></td>
-            <td><%= profile.firstname %></td>
-            <td><%= profile.lastname %></td>
-            <td><%= profile.ContactId %></td>
-            <td class="text-center">
-              <a href="/profiles/<%= profile.id %>/edit"><button type="button" name="button" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Edit</button></a>
-              <a href="/profiles/<%= profile.id %>/delete"><button type="button" name="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button></a>
-            </td>
-          </tr>
-        <% }) %>
-      </table>
-    </div>
+      <% if(message != '') { %>
+        <%= `Error: Contact's id is already taken`%>
+      <%}%>
+    </form>
+
   </body>
 </html>

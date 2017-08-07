@@ -1,54 +1,84 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <style>
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      background-color: #111;
+    }
+</style>
     <meta charset="utf-8">
-    <title></title>
-    <%- include part/css %>
+    <title>Addresses</title>
   </head>
   <body>
-    <%- include part/menu %>
+    <ul>
+      <li><a class="active" href="/">Home</a></li>
+      <li><a href="contacts">Contact</a></li>
+      <li><a href="groups">Group</a></li>
+      <li><a href="addresses">Address</a></li>
+      <li><a href="profiles">Profile</a></li>
+    </ul>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>ZIP code</th>
+        <th>Contact Name</th>
+        <th>Company</th>
+        <th>Telp Number</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </td>
+      <% for(var i = 0; i < data.length; i++) { %>
+      <tr>
+        <td><%= data[i].id %></td>
+        <td><%= data[i].street %></td>
+        <td><%= data[i].city %></td>
+        <td><%= data[i].zip_code %></td>
+        <td><%= data[i].name %></td>
+        <td><%= data[i].company %></td>
+        <td><%= data[i].telp_number %></td>
+        <td><%= data[i].email %></td>
+        <td>
+            <a class = 'button_2' href='addresses/edit/<%= data[i].id %>'>Edit </a>||
+            <a class = 'button_2' href='addresses/delete/<%= data[i].id %>'>Delete </a>||
+        </td>
+      </tr>
+      <%  }  %>
 
-    <div class="col-md-8 col-md-offset-2">
-      <form class="form-inline" action="/addresses" method="post">
-        <label>New Address Register Form</label><br>
-        <input type="text" name="address" placeholder="ex: Saleh Sungkar Street no. 13" class="form-control">
-        <input type="text" name="city" placeholder="ex: South Jakarta" class="form-control">
-        <input type="text" name="zipcode" placeholder="ex: 41230" class="form-control">
-        <select  name="ContactId" class="form-control">
-          <option value="" disabled selected>select Contact</option>
+    </table>
 
-          <% kontak.forEach(getData => { %>
-            <option value="<%= getData.id %>"><%= getData.name %></option>
-          <% }) %>
-        </select>
-        <button type="submit" name="button" class="btn btn-info"><span class="glyphicon glyphicon-send"></span> &nbsp; Add New Address</button>
-      </form>
-      <br>
-      <table class="table table-hover">
-        <tr class="info">
-          <td class="text-center">No</td>
-          <td class="text-center">Address ID</td>
-          <td>Address </td>
-          <td>City</td>
-          <td>Zip Code</td>
-          <td>Contact Id</td>
-          <td class="text-center">Action</td>
-        </tr>
-        <% let i = 1; addressData.forEach(address => { %>
-          <tr>
-            <td class="text-center"><%= i++ %></td>
-            <td class="text-center"><%= address.id %></td>
-            <td><%= address.address %></td>
-            <td><%= address.city %></td>
-            <td><%= address.zipcode %></td>
-            <td><%= address.ContactId %></td>
-            <td class="text-center">
-              <a href="/addresses/<%= address.id %>/edit"><button type="button" name="button" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Edit</button></a>
-              <a href="/addresses/<%= address.id %>/delete"><button type="button" name="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button></a>
-            </td>
-          </tr>
-        <% }) %>
-      </table>
-    </div>
+    <form action="/addresses" method="post">
+      <input type="text" name='street' placeholder="street name">
+      <input type="text" name='city' placeholder="city name">
+      <input type="text" name='zip_code' placeholder="ZIP code">
+      <select name="contacts_id">
+      <% data_contact.forEach( cont => {%>
+        <option value="<%= cont.id%>"><%= cont.name%></option>
+      <%})%>
+      </select>
+      <button class = 'button_3' type="submit">Submit</button>
+    </form>
+
   </body>
 </html>
