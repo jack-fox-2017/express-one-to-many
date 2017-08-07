@@ -16,12 +16,14 @@ let index = require('./routers/index');
 let contacts = require('./routers/contact');
 let groups = require('./routers/group');
 let addresses = require('./routers/address');
+let addresses_with_contact = require('./routers/addresswith');
 let profiles = require('./routers/profile');
 
 app.use('/', index);
 app.use('/contacts', contacts);
 app.use('/groups', groups);
 app.use('/addresses', addresses);
+app.use('/addresses_with_contact', addresses_with_contact);
 app.use('/profiles', profiles);
 
 app.listen(3000);
