@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="/addresses/edit/<%= data[0].id %>" method="post">
+      <input type="text" name="street" placeholder="Street" value="<%= data[0].street %>">
+      <input type="text" name="city" placeholder="city" value="<%= data[0].city %>">
+      <select name="contactId">
+          <% for (let i=0; i<data2.length; i++) { %>
+            <% if (data2[i].id == data.UserId) { %>
+              <option value="<%= data2[i].id %>" selected><%= data2[i].name %></option>
+              <!-- <option value="<%= data2[i].id %>" selected><%= data2[i].firstname %> <%= data2[i].lastname %></option> -->
+            <% } else { %>
+              <option value="<%= data2[i].id %>"><%= data2[i].name %></option>
+              <!-- <option value="<%= data2[i].id %>"><%= data2[i].firstname %> <%= data2[i].lastname %></option> -->
+            <% } %>
+          <% } %>
+      </select>
+      <button type="submit" name="submit">Submit</button>
+    </form>
+  </body>
+</html>

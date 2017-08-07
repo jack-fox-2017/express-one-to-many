@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    page addresses.
+    <br><br>
+    <form action="/addresses" method="post">
+      <input type="text" name="street" placeholder="Street">
+      <input type="text" name="city" placeholder="City">
+      <input type="text" name="zip" placeholder="Zip Code">
+      <select name="contactId">
+        <% data2.forEach(d => { %>
+        <option value="<%= d.id %>"><%= d.name %></option>
+        <% }) %>
+      </select>
+      <button type="submit" name="submit">Add</button>
+    </form>
+    <br><br>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Street</th>
+          <th>City</th>
+          <th>Zip Code</th>
+          <th>Contact ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(d => { %>
+        <tr>
+          <td><%= d.id %></td>
+          <td><%= d.street %></td>
+          <td><%= d.city %></td>
+          <td><%= d.zip_code %></td>
+          <td><%= d.ContactId %></td>
+          <td><%= d.name %></td>
+          <td><a href="/addresses/delete/<%= d.id %>">DELETE</a></td>
+          <td><a href="/addresses/edit/<%= d.id %>">EDIT</a></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <br><br>
+    <a href="/">Back</a>
+  </body>
+</html>
