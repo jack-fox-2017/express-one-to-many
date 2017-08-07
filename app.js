@@ -244,6 +244,17 @@ app.get('/addresses/delete/:id', (req, res)=>{
   res.redirect('/addresses');
 });
 
+//addresses_with_contact
+app.get('/addresses_with_contact', (req, res)=>{
+  let qry_ShowAddressContact = `SELECT * FROM Addresses LEFT JOIN Contacts ON Addresses.contacts_id = Contacts.id`;
+  db.all(qry_ShowAddressContact, (err, rows)=>{
+    if(err)
+      res.send(err.toString());
+    else
+      res.render('addresses_with_contact', {data:rows});
+  });
+});
+
 //listen to localhost:3000
 app.listen(3000, ()=>{
   console.log('listening on port 3000');

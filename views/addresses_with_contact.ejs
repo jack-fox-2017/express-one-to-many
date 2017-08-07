@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses with contact</title>
+  </head>
+  <body>
+    <h1>Addresses with contact</h1>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Street</th>
+          <th>City</th>
+          <th>Zip code</th>
+          <th>Contact id</th>
+          <th>Name</th>
+          <th>company</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(d =>{ %>
+        <tr>
+          <td><%= d.id %></td>
+          <td><%= d.street %></td>
+          <td><%= d.city %></td>
+          <td><%= d.zip_code %></td>
+          <td><%= d.contacts_id %></td>
+          <td><%= d.name %></td>
+          <td><%= d.company %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>
