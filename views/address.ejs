@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses</title>
+  </head>
+  <body>
+    <h1>Addresses Information</h1>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Street</th>
+          <th>City</th>
+          <th>zip_code</th>
+          <th>Contact ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%data.forEach(z=> { %>
+          <tr>
+            <td><%= z.id %></td>
+            <td><%= z.street %></td>
+            <td><%= z.city %></td>
+            <td><%= z.zip_code %></td>
+            <td><%= z.contact_id %></td>
+            <td><a href="/address/edit/<%=z.id%>">Edit</a></td>
+            <td><a href="/address/delete/<%=z.id%>">Delete</a></td>
+          </tr>
+        <% })%>
+      </tbody>
+    </table>
+    <br><br>
+    <form action="/address" method="post">
+      <fieldset>
+        <input type="text" name="street" placeholder="Input nama street"><br>
+        <input type="text" name="city" placeholder="Input nama city"><br>
+        <input type="text" name="zip_code" placeholder="Input zip_code"><br>
+        <button type="submit">save</button>
+      </fieldset>
+    </form>
+    <br><br>
+    <a href="/">Home</a>
+  </body>
+</html>
