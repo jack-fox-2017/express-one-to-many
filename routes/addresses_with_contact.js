@@ -4,14 +4,14 @@ const sqlite3 = require('sqlite3').verbose()
 const db = new sqlite3.Database('./db/data.db')
 
 router.get('/', (req, res) => {
-  db.all(`SELECT * FROM contacts`, (errA, rowsA) => {
+  db.all(`SELECT * FROM addresses`, (errA, rowsA) => {
     if (errA) throw errA
 
     db.serialize(function() {
       rowsA.forEach((item, index) => {
         rowsA[index].streets = []
-        db.all(`SELECT street FROM addresses WHERE contact_id=${item.id}`, (err, rows) => {
-          rowsA[index].streets = rows.map(x => {return x.street})
+        db.all(`SELECT name FROM contacts WHERE id=${item.contact_id}`, (err, rows) => {
+          rowsA[index].name = rows.map(x => {return x.name})
         })
       })
 
@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
 //       contacts.name as contact_name
 
 //       FROM addresses
-//         LEFT JOIN contacts 
+//         LEFT JOIN contacts
 //           ON contacts.id = addresses.contact_id
 //             WHERE addresses.id = ${req.params.id}
 //   `, (errA, rowsA) => {
