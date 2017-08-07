@@ -1,26 +1,15 @@
-const sqlite3 = require('sqlite3').verbose();
+var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./db/data.db');
 
-// function createTable() {
-db.serialize(function() {
-  db.run(`CREATE TABLE if not exists 'Contact' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'name' text, 'company' text, 'phone' INTEGER, 'email' text)`);
-  console.log('Contact Table Created!');
+function createTableContacts() {
+  db.run(`CREATE TABLE IF NOT EXISTS contacts
+        (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, company TEXT, telp_number TEXT, email TEXT);`);
 
-  db.run(`CREATE TABLE if not exists 'Grup' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'name' text)`)
-  console.log('Group Table Created!');
+  console.log("Table contacts created");
 
-  db.run(`CREATE TABLE if not exists 'Profile' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'username' text, 'password' text, 'firstname' text, 'lastname' text, 'ContactId' INTEGER, FOREIGN KEY(ContactId) REFERENCES Contact(id))`);
-  console.log('Profile Table Created!');
+  db.run(`CREATE TABLE IF NOT EXISTS address
+          (id INTEGER PRIMARY KEY AUTOINCREMENT, postal_code INTEGER, street TEXT, city TEXT,  contacts_id INTEGER, FOREIGN KEY(contacts_id) REFERENCES contacts(id));`);
+  console.log("Table address berhasil di buat");
+  }
 
-  db.run(`CREATE TABLE if not exists 'Address' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'address' text, 'city' text, 'zipcode' INTEGER, 'ContactId' INTEGER, FOREIGN KEY(ContactId) REFERENCES Contact(id))`);
-  console.log('Address Table Created!');
-
-  db.run(`CREATE TABLE if not exists 'CG' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'ContactId' INTEGER, 'GroupId' INTEGER)`)
-})
-
-
-function insertData() {
-  db.run("INSERT INTO CONTACT (name, company, phone, email) VALUES ('Achim Baggins', 'Hacktiv8 Indonesia', 081803704343, 'achim_baggins@yahoo.com')");
-}
-// createTable()
-// insertData()
+  createTableContacts()

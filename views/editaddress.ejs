@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="/address/editaddress/<%=input[0].id%>" method="post">
+      City :<br>
+      <input type="text" name="city" value="<%=input[0].city%>">
+      <br>
+      Street :<br>
+      <input type="text" name="street" value="<%=input[0].street%>">
+      <br>
+      Postal Code :<br>
+      <input type="text" name="postal_code" value="<%=input[0].postal_code%>">
+      <br>
+    <button type="submit" name="Button">submit</button>
+    </form>
+  </body>
+</html>
