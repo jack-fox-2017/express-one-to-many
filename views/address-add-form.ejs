@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Profiles Add Form</title>
+  </head>
+  <body>
+  <center>
+    <h2>ADD PROFILE</h2><br><br>
+    <form action="/profiles/add" method="POST">
+    Street:<br>
+    <input type="text" name="street" value="">
+    <br><br>
+    City:<br>
+    <input type="text" name="city" value="">
+    <br><br>
+    Zip Code:<br>
+    <input type="text" name="zipcode" value="">
+    <br><br>
+    <select name="user_id">
+      <% dataUsers.forEach(data =>{ %>
+        <option value="<%= data.id %>" selected>
+          <%= data.username %>
+      </option>
+     <% }) %>
+
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+  </center>
+  </body>
+</html>

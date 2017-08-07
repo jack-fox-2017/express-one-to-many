@@ -1,160 +1,127 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const ejs = require('ejs');
-const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database('./db/data.db')
-
+const express = require('express')
 const app = express()
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
-app.set('view engine', 'ejs')
+const bodyParser = require('body-parser')
+app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-  // res.send('ok running yak')
-  res.render('index')
-})
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('./db/data.db');
 
-//ROUTING KONTAK
-app.get('/contacts', (req, res) => {
-  db.all(`SELECT * FROM Contact ORDER BY id DESC`, (err, data) => {
-    res.render('contact', {contactData: data})
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+//=============USERS=============//
+//home page
+app.get('/home', function(req, res){
+  res.render('home')
+});
+
+//users page
+app.get('/users', function(req, res){
+  db.all(`SELECT * FROM Users`, function(err, rows){
+    res.render('users', {dataUsers: rows})
   })
 })
 
-app.post('/contacts', (req, res) => {
-  db.run(`INSERT INTO Contact (name, company, phone, email) VALUES
-  ('${req.body.name}', '${req.body.company}', ${req.body.phone}, '${req.body.email}')`)
-  res.redirect('/contacts')
+//users add form page
+app.get('/users/add', function(req, res){
+  res.render('user-add-form')
 })
 
-app.get('/contacts/:id/edit', (req, res) => {
-  db.all(`SELECT * FROM Contact where id=${req.params.id}`, (err, data) => {
-    res.render('contact-edit', {edit: data[0]})
+//users add data users
+app.post('/users/add', function(req, res){
+  db.run(`INSERT INTO Users (username, firstname, lastname, email)
+  VALUES ('${req.body.username}', '${req.body.firstname}',
+  '${req.body.lastname}', '${req.body.email}')`)
+  res.redirect('/users')
+})
+
+//user edit form page
+app.get('/users/edit/:id', function(req, res){
+  db.all(`SELECT * FROM Users WHERE id = ${req.params.id}`, function(err, rows){
+    res.render('user-edit-form', {dataUsers: rows[0]})
   })
 })
 
-app.post('/contacts/:id/edit', (req, res) => {
-  db.run(`UPDATE Contact SET name='${req.body.name}', company='${req.body.company}', phone='${req.body.phone}', email='${req.body.email}' WHERE id='${req.params.id}'`)
-  res.redirect('/contacts')
+//user edit users
+app.post('/users/edit/:id', function(req, res){
+  db.run(`UPDATE Users SET username = '${req.body.username}', firstname = '${req.body.firstname}',
+  lastname = '${req.body.lastname}', email = '${req.body.email}' WHERE id = ${req.params.id}`)
+  res.redirect('/users')
 })
 
-app.get('/contacts/:id/delete', (req, res) => {
-  db.run(`DELETE from Contact where id=${req.params.id};`);
-  res.redirect('/contacts')
+//delete data users
+app.get('/users/delete/:id', function(req, res){
+  db.run(`DELETE FROM Users WHERE id = ${req.params.id}`)
+  res.redirect('/users')
 })
 
+//==============PROFILES================//
 
-//ROUTER GROUPS
-app.get('/groups', (req, res) => {
-  db.all(`select * from Grup ORDER BY id DESC`, (err, data) => {
-    if(!err){
-      res.render('group', {groupData: data})
+//profile home page
+app.get('/address', function(req, res){
+
+  db.all(`SELECT * FROM Address`, function(err, rows){
+
+      db.all(`SELECT * FROM Users `, function(err, rows2){
+
+        for(let i=0; i<rows.length; i++)
+        {
+          for(let j=0; j<rows2.length; j++)
+          {
+            if(rows[i].user_id == rows2[j].id)
+            {
+              rows[i].username = rows2[j].username
+            }
+          }
+        }
+        res.render('address', {dataAddress:rows})
+    })
+  })
+})
+
+//profile add form page
+app.get('/address/add',function(req, res){
+  db.all(`SELECT * FROM Users`, function(err, dataUsers){
+    res.render('address-add-form', {dataUsers:dataUsers})
+  })
+})
+
+//profiles add data profiles
+app.post('/profiles/add', function(req, res){
+  db.run(`INSERT INTO Address (street, city, zipcode, user_id)
+  VALUES ('${req.body.street}', '${req.body.city}', '${req.body.zipcode}',
+  '${req.body.user_id}')`, function(err, solved){
+    if(!err)
+    {
+      res.redirect('/address')
     }
-  });
-})
-
-app.post('/groups', (req, res) => {
-  db.run(`INSERT INTO Grup (name) VALUES ('${req.body.name}')`);
-  res.redirect('/groups')
-})
-
-
-app.get('/groups/:id/edit', (req, res) => {
-  db.all(`select * from Grup where id='${req.params.id}'`, (err, data) => {
-    res.render('group-edit', {edit: data[0]})
-    // res.send(data)
-  })
-})
-
-app.post('/groups/:id/edit', (req, res) => {
-  db.run(`UPDATE Grup set name='${req.body.name}' where id=${req.params.id}`)
-  res.redirect('/groups')
-})
-
-app.get('/groups/:id/delete', (req, res) => {
-  db.run(`delete from Grup where id=${req.params.id}`)
-  res.redirect('/groups')
-})
-
-//ROUTER PROFILE
-app.get('/profiles', (req, res) => {
-  db.all(`select * from Contact`, (err, data) => {
-    db.all(`select * from Profile ORDER BY id DESC`, (err, profile) => {
-      res.render('profile', {kontak: data, profileData: profile, pesan: false})
-    })
-  })
-})
-
-app.post('/profiles', (req, res) => {
-  db.all(`select * from Profile where ContactId=${req.body.ContactId} OR username='${req.body.username}'`, (err, data) => {
-    if(err){
-      db.run(`INSERT INTO Profile (username, password, firstname, lastname, ContactId) VALUES ('${req.body.username}', '${req.body.password}', '${req.body.firstname}', '${req.body.lastname}', ${req.body.ContactId})`)
-      res.redirect('/profiles')
-    } else {
-      db.all(`select * from Contact`, (err, data) => {
-        db.all(`select * from Profile ORDER BY id DESC`, (err, profile) => {
-          res.render('profile', {kontak: data, profileData: profile, pesan: 'Maaf!!!\nUsername dan Contact ID yang anda masukkan tidak dapat digunakan!!!'})
-        })
-      })
+    else {
+      res.send('Data telah di pakai')
     }
   })
 })
 
-app.get('/profiles/:id/edit', (req, res) => {
-  db.all(`select * from Profile where id=${req.params.id}`, (err, data) => {
-    db.all(`select * from Contact`, (err, dataKontak) => {
-      res.render('profile-edit', {dataProfile: data[0], dataKontak: dataKontak, pesan: false})
+//user edit form page
+app.get('/address/edit/:id', function(req, res){
+  db.all(`SELECT * FROM Address WHERE id = ${req.params.id}`, function(err, rows){
+    db.all(`SELECT * FROM Users`, function(err, rows1){
+      res.render('address-edit-form', {dataAddress:rows, dataUsers:rows1})
     })
   })
 })
 
-app.post('/profiles/:id/edit', (req, res) => {
-      db.run(`UPDATE Profile set  password='${req.body.password}', firstname='${req.body.firstname}', lastname='${req.body.lastname}' where id=${req.params.id}`)
-      res.redirect('/profiles')
+//user edit users
+app.post('/address/edit/:id', function(req, res){
+  db.run(`UPDATE Address SET street = '${req.body.street}', city = '${req.body.city}',
+  zipcode = '${req.body.zipcode}', user_id = '${req.body.user_id}' WHERE id = ${req.params.id}`)
+  res.redirect('/address')
 })
 
-app.get('/profiles/:id/delete', (req, res) => {
-  db.run(`DELETE from Profile where id=${req.params.id}`)
-  res.redirect('/profiles')
-})
-
-
-//ROUTER ADDRESS
-app.get('/addresses', (req, res) => {
-  db.all(`select * from Contact`, (err, data) => {
-    db.all(`select * from Address ORDER BY id DESC`, (err, dataAddress) => {
-      res.render('address', {kontak: data, addressData: dataAddress})
-    })
-  })
-})
-
-app.post('/addresses', (req, res) => {
-  db.run(`insert into Address (address, city, zipcode, ContactId) VALUES ('${req.body.address}', '${req.body.city}', ${req.body.zipcode}, ${req.body.ContactId})`)
-  res.redirect('/addresses')
-})
-
-app.get('/addresses/:id/edit', (req, res) => {
-  db.all(`select * from Address where id=${req.params.id}`, (err, data) => {
-    db.all(`select * from Contact`, (err, dataKontak) => {
-      res.render('address-edit', {data: data[0], kontak: dataKontak})
-    })
-  })
-})
-
-app.post('/addresses/:id/edit', (req, res) => {
-  db.run(`UPDATE Address set
-    address='${req.body.address}',
-    city='${req.body.city}',
-    zipcode=${req.body.zipcode},
-    ContactId=${req.body.ContactId}
-    where id=${req.params.id}`)
-  res.redirect('/addresses')
-})
-
-app.get('/addresses/:id/delete', (req, res) => {
-  db.run(`DELETE from Address where id=${req.params.id}`)
-  res.redirect('/addresses')
+app.get('/address/delete/:id', function(req, res){
+  db.run(`DELETE FROM Address WHERE id= ${req.params.id}`)
+  res.redirect('/address')
 })
 
 
-app.listen(process.env.PORT || 3000)
+app.listen(3000);
