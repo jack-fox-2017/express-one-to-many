@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses</title>
+  </head>
+  <body>
+    <h1>Addresses</h1>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Street</th>
+          <th>City</th>
+          <th>Zip code</th>
+          <th>Contact id</th>
+          <th colspan="2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% dataAddresses.forEach(d =>{ %>
+        <tr>
+          <td><%= d.id %></td>
+          <td><%= d.street %></td>
+          <td><%= d.city %></td>
+          <td><%= d.zip_code %></td>
+          <td><%= d.contacts_id %></td>
+          <td><a href="/addresses/edit/<%= d.id %>">Edit</a></td>
+          <td><a href="/addresses/delete/<%= d.id %>">Delete</a></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <br><br><br>
+    <form action="/addresses" method="post">
+      <input type="text" name="street" placeholder="Street"><br>
+      <input type="text" name="city" placeholder="City"><br>
+      <input type="text" name="zip_code" placeholder="Zip code"><br>
+      <select class="" name="contacts_id">
+        <% dataContacts.forEach(dC =>{ %>
+        <option value="<%=dC.id%>"><%= dC.name %></option>
+        <% }) %>
+      </select><br><br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
