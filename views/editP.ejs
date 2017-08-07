@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>EDIT PROFILES</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="title" align=center>
+      <h1>FORM EDIT</h1>
+      <form action="/profiles/editP/<%= dataProfile[0].id %>" method="post">
+        <input type="text" name="user" value="<%=dataProfile[0].username%>"><br>
+        <select name="drop">
+          <% dataContact.forEach( cont => { %>
+        <option value="<%=cont.id%>" <%=cont.id == dataProfile[0].contacts_id ? "SELECTED": '' %>>
+          <%=cont.name%>
+        </option>
+        <% }) %>
+          </select>
+        <input type="submit" value="Submit">
+      </form>
+      <br><br>
+      <a href="/">BACK</a>
+    </div>
+  </body>
+
+</html>
+</div>
+</body>
+
+</html>

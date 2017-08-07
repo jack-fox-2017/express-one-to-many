@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>CONTACTS</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="title" align=center>
+      <table align=center>
+        <tr>
+          <th>ID</th>
+          <th>NAMA</th>
+          <th>COMPANY</th>
+          <th>PHONE</th>
+          <th>EMAIL</th>
+          <th>GROUP</th>
+          <th>ADDRESS</th>
+        </tr>
+        <% data.forEach( cont => { %>
+          <tr>
+            <td>
+              <%= cont.id %>
+            </td>
+            <td>
+              <%= cont.name %>
+            </td>
+            <td>
+              <%= cont.company %>
+            </td>
+            <td>
+              <%= cont.telp_number %>
+            </td>
+            <td>
+              <%= cont.email %>
+            </td>
+            <td>
+              <%= cont.name_of_group %>
+            </td>
+            <td>
+              
+            </td>
+            <td><a href="/contacts/edit/<%= cont.id %>">EDIT</a> | <a href="/contacts/delete/<%= cont.id %>">DELETE</a></td>
+          </tr>
+          <% }) %>
+      </table>
+
+      <br>
+      <br>
+
+      <h1>FORM</h1>
+      <form action="/contacts" method="post">
+        <input type="text" name="nama" placeholder="Insert Your Name"><br>
+        <input type="text" name="corp" placeholder="Insert Your Company Name"><br>
+        <input type="text" name="phone" placeholder="Insert Your Phone Number"><br>
+        <input type="text" name="email" placeholder="Insert Your E-mail Address"><br>
+        <input type="submit" value="Submit">
+      </form>
+      <br><br>
+      <a href="/">BACK</a>
+    </div>
+  </body>
+
+</html>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>PROFILES</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="title" align=center>
+      <table align=center>
+        <tr>
+          <th>ID</th>
+          <th>USERNAME</th>
+          <th>CONTACT</th>
+        </tr>
+        <% dataP.forEach( prof => { %>
+          <tr>
+            <td>
+              <%= prof.id %>
+            </td>
+            <td>
+              <%= prof.username %>
+            </td>
+            <td>
+              <%= prof.name %>
+            </td>
+            <td><a href="/profiles/editP/<%= prof.id %>">EDIT</a></td>
+            <td><a href="/profiles/delete/<%= prof.id %>">DELETE</a></td>
+          </tr>
+          <% }) %>
+      </table>
+      <h1>FORM</h1>
+      <form action="/profiles" method="post">
+        <input type="text" name="user" placeholder="Insert Your Username"><br>
+        <select name="drop">
+          <% dataContact.forEach( cont => { %>
+        <option value="<%=cont.id%>">
+          <%=cont.name%>
+        </option>
+        <% }) %>
+          </select>
+        <input type="submit" value="Submit">
+      </form>
+      <br><br>
+      <a href="/">BACK</a>
+    </div>
+  </body>
+
+</html>
+</div>
+</body>
+
+</html>

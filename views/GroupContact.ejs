@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+
+  <body align=center>
+    <h1>CONNECT</h1>
+    <form action="/groups/add/" method="post">
+      <select name="drop">
+        <% dataG.forEach( grup => { %>
+      <option value="<%=grup.id%>">
+        <%=grup.name_of_group%>
+      </option>
+      <% }) %>
+        </select>
+      <select name="drops">
+        <% dataC.forEach( cont => { %>
+      <option value="<%=cont.id%>">
+        <%=cont.name%>
+      </option>
+      <% }) %>
+        </select>
+      <input type="submit" value="Submit">
+    </form>
+    <br><br><br>
+    <button type="button" name="button"><a href="/groups">BACK</a></button>
+  </body>
+
+</html>
